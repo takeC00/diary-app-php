@@ -1,7 +1,8 @@
 ## 概要
 ・Diary App (Pure PHP)
 Laravel版からフレームワークを使わずに再実装したプロジェクト
-https://github.com/takeC00/diary-app-laravel(laravel版リポジトリ)
+https://github.com/takeC00/diary-app-laravel
+(laravel版リポジトリ)
 
 ## 機能一覧
 
