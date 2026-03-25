@@ -6,8 +6,8 @@ require_once __DIR__ . '/../app/controllers/DiaryController.php';
 
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-// /diary-app-php や /diary-app-php/ で一覧画面を表示
-if ($path === '/diary-app-php' || $path === '/diary-app-php/') {
+// /で一覧画面を表示
+if ($path === '/' || $path === '') {
     $controller = new DiaryController();
     $controller->index();
     exit;

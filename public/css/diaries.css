@@ -1,0 +1,48 @@
+.container {
+	max-width: 800px;
+	margin: 40px auto;
+}
+
+.page-title {
+	font-size: 32px;
+	margin-bottom: 24px;
+}
+
+.diary-list {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 20px;
+}
+
+.diary-card {
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	padding: 16px;
+	background: #fff;
+}
+
+.diary-image {
+	width: 128px;
+	height: 128px;
+	object-fit: cover;
+	display: block;
+	margin:0 auto;
+}
+
+.diary-title {
+	font-size: 20px;
+	margin-bottom: 12x;
+	text-align: center;
+}
+
+.diary-date {
+	color: #666;
+	margin-bottom: 12px;
+	text-align: center;
+}
+
+.diary-user {
+	color: #666;
+	margin-bottom: 12px;
+	text-align: right;
+}
