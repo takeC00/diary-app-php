@@ -14,23 +14,23 @@
 }
 
 header {
-	padding: 20px 60px;
-	background-color: rgb(17 24 39)
+	padding: 20px 250px;
+	background-color: rgb(17 24 39);
 }
 
 .right {
 	text-align:right;
 }
 
-a {
-	text-decoration: none;
+header a {
 	color: white;
+	text-decoration: none;
 }
 
 nav a:hover {
-	color: red
+	color: red;
 }
 
 li {
-	list-style: none
+	list-style: none;
 }

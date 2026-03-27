@@ -29,10 +29,20 @@
 	margin:0 auto;
 }
 
-.diary-title {
+h2.diary-title {
+	color: #666;
 	font-size: 20px;
-	margin-bottom: 12x;
+	margin-bottom: 12px;
 	text-align: center;
+}
+
+a {
+	text-decoration: none;
+}
+
+.diary-card a {
+	color: #666;
+	color: inherit;
 }
 
 .diary-date {
