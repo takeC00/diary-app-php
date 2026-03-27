@@ -13,5 +13,10 @@ if ($path === '/' || $path === '') {
     exit;
 }
 
+// /showで詳細ページを表示
+if ($path === '/show' ) {
+	echo "詳細ページ";
+	exit;
+}
 http_response_code(404);
 echo '404 Not Found';

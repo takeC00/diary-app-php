@@ -1,0 +1,93 @@
+【MAMP設定手順（ローカル開発用）】
+
+① DocumentRoot設定
+/Applications/MAMP/htdocs/diary-app-php/public
+
+理由：
+・public配下のみ公開（セキュリティ）
+・フレームワークと同じ構成
+・ルーティングが楽になる
+
+
+② Apache設定（httpd.conf）
+/Applications/MAMP/conf/apache/httpd.conf
+
+▼ mod_rewrite 有効化
+LoadModule rewrite_module modules/mod_rewrite.so
+※ 先頭の # を外す
+
+▼ AllowOverride 設定
+<Directory "/Applications/MAMP/htdocs">
+    Options Indexes FollowSymLinks
+    AllowOverride All
+    Require all granted
+</Directory>
+
+※ .htaccess を有効にするため必須
+
+
+③ .htaccess作成（public配下）
+public/.htaccess
+
+↓内容↓
+
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [L,QSA]
+
+役割：
+・全リクエストを index.php に集約（フロントコントローラ）
+
+
+④ MAMP再起動（必須）
+Stop → Start
+
+※ httpd.conf変更後は必ず再起動
+
+
+⑤ index.php（ルーティング）
+public/index.php
+
+<?php
+
+declare(strict_types=1);
+
+require_once __DIR__ . '/../app/controllers/DiaryController.php';
+
+$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$path = rtrim($path, '/');
+
+if ($path === '') {
+    (new DiaryController())->index();
+    exit;
+}
+
+if ($path === '/show') {
+    echo "詳細ページ";
+    exit;
+}
+
+http_response_code(404);
+echo '404 Not Found';
+
+
+⑥ 動作確認
+http://localhost:8888/
+http://localhost:8888/show
+
+
+【最終動作イメージ】
+/        → index.php → 一覧
+/show    → index.php → 詳細
+
+【処理の流れ】
+Apache → .htaccess → index.php → Controller
+
+
+【よくあるミス】
+・/show で404 → .htaccessが効いてない
+・500エラー → .htaccess記述ミス
+・ルーティング不一致 → /show と show の違い
+・設定変更後に再起動してない
