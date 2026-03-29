@@ -8,14 +8,14 @@
 				<div class="diary-detail flex">
 					<div class="img">
 						<div class="background-white">
-							<img src="<?= $diary['image'] ?>" alt="">
+							<img src="<?= $diary['image'] ? $diary['image'] : '/images/default.png' ; ?>" alt="">
 						</div>
 					</div>
 					<div class="detail">
 						<p>タイトル：<?= $diary['title'] ?></p>
-						<p>日付：<?= $diary['title'] ?></p>
-						<p>作者：<?= $diary['title'] ?></p>
-					</div>
+						<p>日付：<?= $diary['diary_date'] ?></p>
+						<p>作者：<?= $diary['user_name'] ?></p>
+						</div>
 				</div>
 				<div class="detail-text">
 					<p class="detail-body">
