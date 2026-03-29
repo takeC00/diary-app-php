@@ -4,6 +4,11 @@
 <body>
 	<main>
 		<section>
+			<div class="button-section">
+				<a href="/edit/<?= htmlspecialchars($diary['id'], ENT_QUOTES, 'UTF-8') ?>"><button class="edit">編集</button></a>
+				<a href="/delete/<?= htmlspecialchars($diary['id'], ENT_QUOTES, 'UTF-8') ?>"><button class="delete">削除</button></a>
+				<a href="/"><button class="back">戻る</button></a>
+			</div>
 			<div class="detail-section">
 				<div class="diary-detail flex">
 					<div class="img">

@@ -35,3 +35,30 @@ img {
 	max-width: 250px;
 	height: auto;
 }
+
+.button-section button{
+	padding:10px 20px;
+	background-color: blanchedalmond;
+	border-radius: 10px;
+	border-width: 5px;
+	border-color: rgba(83, 83, 83, 0.356);
+}
+
+.button-section{
+	text-align: right;
+}
+
+button.edit:hover{
+	background-color: rgb(134 239 172);
+	color:white;
+}
+
+button.delete:hover{
+	background-color: rgb(252 165 165);
+	color:white;
+}
+
+button.back:hover{
+	background-color: rgb(147 197 253);
+	color:white;
+}
