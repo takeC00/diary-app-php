@@ -2,7 +2,7 @@
 	<div class="flex">
 		<!-- ロゴ -->
 		<div class="flex">
-			<a href="/diaries" class="flex">
+			<a href="/" class="flex">
 				<img src="/images/default.png" class="logo">
 				<span class="">Photo Diary</span>
 			</a>

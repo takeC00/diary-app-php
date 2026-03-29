@@ -3,7 +3,7 @@
 
 		<!-- ロゴ -->
 		<div class="">
-			<a href="/diaries" class="flex">
+			<a href="/" class="flex">
 				<img src="/images/default.png" class="logo-mid">
 			</a>
 		</div>
