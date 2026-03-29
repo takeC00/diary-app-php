@@ -57,4 +57,26 @@ class DiaryController
 
 			require __DIR__ . '/../views/diaries/index.php';
     }
+
+		public function show($id): void
+    {
+			global $pdo;
+
+			$sql = "
+				SELECT
+					d.*,
+					u.name AS user_name
+				FROM diaries d
+				INNER JOIN users u ON d.user_id = u.id
+				WHERE d.id = :id
+			";
+
+			$stmt = $pdo->prepare($sql);
+			$stmt->bindValue(':id', $id, PDO::PARAM_INT);
+			$stmt->execute();
+
+			$diary = $stmt->fetch(PDO::FETCH_ASSOC);
+
+			require __DIR__ . '/../views/diaries/show.php';
+    }
 }

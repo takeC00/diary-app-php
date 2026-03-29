@@ -13,10 +13,13 @@ if ($path === '/' || $path === '') {
     exit;
 }
 
-// /showで詳細ページを表示
-if ($path === '/show' ) {
-	echo "詳細ページ";
+// /show/:id で詳細ページを表示
+if (preg_match('#^/show/(\d+)$#', $path, $matches)) {
+	$id = (int)$matches[1];
+	$controller = new DiaryController();
+	$controller->show($id);
 	exit;
 }
+
 http_response_code(404);
 echo '404 Not Found';
