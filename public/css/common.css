@@ -9,3 +9,9 @@ main {
 section {
 	padding: 60px 100px;
 }
+
+.error {
+	background-color: rgba(255, 128, 128, 0.428);
+	border-color: rgba(255, 0, 0, 0.437);
+}
+

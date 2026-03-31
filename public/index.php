@@ -2,9 +2,13 @@
 
 declare(strict_types=1);
 
+session_start();
+
 require_once __DIR__ . '/../app/controllers/DiaryController.php';
+require_once __DIR__ . '/../app/controllers/LoginController.php';
 
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$method = $_SERVER['REQUEST_METHOD'];
 
 // /で一覧画面を表示
 if ($path === '/' || $path === '') {
@@ -18,6 +22,34 @@ if (preg_match('#^/show/(\d+)$#', $path, $matches)) {
 	$id = (int)$matches[1];
 	$controller = new DiaryController();
 	$controller->show($id);
+	exit;
+}
+
+// /login でログインページ
+if ($path === '/login' && $method=='GET') {
+	$controller = new LoginController();
+	$controller->showLogin();
+	exit;
+}
+
+// ログイン処理
+if ($path === '/login' && $method=='POST') {
+	$controller = new LoginController();
+	$controller->login();
+	exit;
+}
+
+// 新規登録画面
+if ($path === '/register' && $method=='GET') {
+	$controller = new LoginController();
+	$controller->showRegister();
+	exit;
+}
+
+// 新規登録処理
+if ($path === '/register' && $method=='POST') {
+	$controller = new LoginController();
+	$controller->register();
 	exit;
 }
 

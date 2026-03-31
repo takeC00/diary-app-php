@@ -16,6 +16,7 @@
 							<img src="<?= $diary['image'] ? $diary['image'] : '/images/default.png' ; ?>" alt="">
 						</div>
 					</div>
+
 					<div class="detail">
 						<p>タイトル：<?= $diary['title'] ?></p>
 						<p>日付：<?= $diary['diary_date'] ?></p>

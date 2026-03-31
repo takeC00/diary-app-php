@@ -10,4 +10,5 @@
 	<link rel="stylesheet" href="/css/footer.css">
 	<link rel="stylesheet" href="/css/diaries.css">
 	<link rel="stylesheet" href="/css/detail.css">
+	<link rel="stylesheet" href="/css/register.css">
 </head>

@@ -1,5 +1,6 @@
 <?php require('../app/views/components/common/head.php') ?>
 <?php require('../app/views/components/common/header.php') ?>
+
 <body>
 	<main>
 		<section>
