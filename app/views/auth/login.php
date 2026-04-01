@@ -6,10 +6,10 @@
 		<section class="container">
 			<h1 class="page-title">ログイン</h1>
 			<?php if (!empty($_SESSION['success'])): ?>
-			<p style="color: green;">
-				<?= htmlspecialchars($_SESSION['success'], ENT_QUOTES, 'UTF-8') ?>
-			</p>
-			<?php unset($_SESSION['success']); ?>
+				<p class="green-message">
+					<?= htmlspecialchars($_SESSION['success'], ENT_QUOTES, 'UTF-8') ?>
+				</p>
+				<?php unset($_SESSION['success']); ?>
 			<?php endif; ?>
 			<?php if (!empty($_SESSION['error'])): ?>
 			<?php foreach ($_SESSION['error'] as $error) :?>
@@ -20,6 +20,8 @@
 			<?php endif; ?>
 
 			<form action="/login" method="POST">
+
+			<div class="input-area">
 				<div class="form">
 					<label for="email">メールアドレス</label>
 					<input class="<?= !empty($_SESSION['error']['email']) ? 'error' : ''?>" type="email" name="email" id="email"
@@ -31,10 +33,10 @@
 					<input class="<?= !empty($_SESSION['error']['email']) ? 'error' : ''?>" type="password" name="password"
 						id="password">
 				</div>
-
+			</div>
 				<div class="right">
 					<div class="register-link-button">
-						<button><a class="register-link" href="/register">アカウント作成がまだの方はこちらから</a></button>
+						<a class="back-button" href="/register">アカウント作成がまだの方はこちらから</a>
 					</div>
 					<div class="login-button">
 						<button class="" type="submit">ログイン</button>

@@ -62,6 +62,8 @@ class LoginController
         $_SESSION = [];
         session_destroy();
 
+				session_start();
+				$_SESSION['success'] = 'ログアウトしました';
         header('Location: /login');
         exit;
     }

@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../../config/app.php';
 require_once BASE_PATH . '/databases/db.php';
+require_once BASE_PATH . '/app/helpers/auth.php';
 
 class DiaryController
 {
     public function index(): void
     {
+			isLogin();
 			global $pdo;
 
 			$page = isset($_GET['page']) ? (int)$_GET['page'] : 1 ;

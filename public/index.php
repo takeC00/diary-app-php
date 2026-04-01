@@ -53,5 +53,12 @@ if ($path === '/register' && $method=='POST') {
 	exit;
 }
 
+// ログアウト
+if ($path === '/logout' && $method=='POST') {
+	$controller = new LoginController();
+	$controller->logout();
+	exit;
+}
+
 http_response_code(404);
 echo '404 Not Found';

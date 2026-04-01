@@ -1,3 +1,18 @@
+main {
+	display: flex;
+	justify-content: center; /* 横中央 */
+	align-items: center;     /* 縦中央 */
+}
+
+.container {
+	width: 100%;
+	max-width: 500px;
+}
+
+.input-area {
+	margin-bottom: 40px;
+}
+
 .form {
 	display: grid;
 	grid-template-columns: 180px 1fr;
