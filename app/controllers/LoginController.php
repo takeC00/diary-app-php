@@ -14,6 +14,7 @@ class LoginController
 
     public function login(): void
     {
+				$_SESSION['error'] = [];
 				global $pdo;
         $email = $_POST['email'] ?? '';
         $password = $_POST['password'] ?? '';
@@ -40,7 +41,7 @@ class LoginController
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if (!$user || !password_verify($password, $user['password'])) {
-            $_SESSION['error'][] = 'メールアドレスまたはパスワードが違います。';
+            $_SESSION['error']['common'] = 'メールアドレスまたはパスワードが違います。';
 						$_SESSION['old']['email'] = $email;
             header('Location: /login');
             exit;
@@ -51,7 +52,6 @@ class LoginController
             'name' => $user['name'],
             'email' => $user['email'],
         ];
-
 				unset($_SESSION['old']);
         header('Location: /');
         exit;
@@ -116,13 +116,46 @@ class LoginController
 
 
 			// パスワード不一致
+			if($password !== $rePassword){
+				$_SESSION['error']['rePassword'] = '入力されたパスワードが一致しません';
+			}
 
+			// パスワードの文字数チェック
+			if (!preg_match('/^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,}$/', $password)) {
+				$_SESSION['error']['password'] = 'パスワードは半角英数字8文字以上で入力してください。';
+		}
 
 			if(!empty($_SESSION['error'])){
 				header('Location: /register');
 				exit;
 			}
 
-			unset($_SESSION['old']);
+			$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+			try {
+				$sql = "
+						INSERT INTO users (name, email, password, icon, created_at, updated_at)
+						VALUES (:name, :email, :password, '', now(), now())
+				";
+
+				$stmt = $pdo->prepare($sql);
+				$stmt->bindValue(':name', $name, PDO::PARAM_STR);
+				$stmt->bindValue(':email', $email, PDO::PARAM_STR);
+				$stmt->bindValue(':password', $hashedPassword, PDO::PARAM_STR);
+				$stmt->execute();
+			} catch (PDOException $e) {
+
+					// 開発用（ログ or 画面確認）
+					error_log($e->getMessage());
+
+					// ユーザー用
+					$_SESSION['error']['common'] = '登録に失敗しました。時間をおいて再度お試しください。';
+
+					header('Location: /register');
+					exit;
+			}
+			unset($_SESSION['old'], $_SESSION['error']);
+			$_SESSION['success'] = '登録が完了しました。ログインしてください。';
+			header('Location: /login');
+			exit;
 		}
 }

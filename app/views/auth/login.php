@@ -5,32 +5,30 @@
 	<main>
 		<section class="container">
 			<h1 class="page-title">ログイン</h1>
-
+			<?php if (!empty($_SESSION['success'])): ?>
+			<p style="color: green;">
+				<?= htmlspecialchars($_SESSION['success'], ENT_QUOTES, 'UTF-8') ?>
+			</p>
+			<?php unset($_SESSION['success']); ?>
+			<?php endif; ?>
 			<?php if (!empty($_SESSION['error'])): ?>
-				<?php foreach ($_SESSION['error'] as $error) :?>
-					<p style="color: red;">
-						<?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?>
-					</p>
-				<?php endforeach ;?>
+			<?php foreach ($_SESSION['error'] as $error) :?>
+			<p style="color: red;">
+				<?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?>
+			</p>
+			<?php endforeach ;?>
 			<?php endif; ?>
 
 			<form action="/login" method="POST">
 				<div class="form">
 					<label for="email">メールアドレス</label>
-					<input
-						class="<?= !empty($_SESSION['error']['email']) ? 'error' : ''?>"
-						type="email"
-						name="email"
-						id="email"
+					<input class="<?= !empty($_SESSION['error']['email']) ? 'error' : ''?>" type="email" name="email" id="email"
 						value="<?= !empty($_SESSION['old']['email']) ? htmlspecialchars($_SESSION['old']['email'], ENT_QUOTES, 'UTF-8'): '' ;?>">
 				</div>
 
 				<div class="form">
 					<label for="password">パスワード</label>
-					<input
-						class="<?= !empty($_SESSION['error']['email']) ? 'error' : ''?>"
-						type="password"
-						name="password"
+					<input class="<?= !empty($_SESSION['error']['email']) ? 'error' : ''?>" type="password" name="password"
 						id="password">
 				</div>
 
