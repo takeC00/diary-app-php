@@ -10,7 +10,7 @@ class DiaryController
 {
     public function index(): void
     {
-			isLogin();
+			requireLogin();
 			global $pdo;
 
 			$page = isset($_GET['page']) ? (int)$_GET['page'] : 1 ;
@@ -62,12 +62,14 @@ class DiaryController
 
 		public function show($id): void
     {
+			requireLogin();
 			global $pdo;
 
 			$sql = "
 				SELECT
 					d.*,
-					u.name AS user_name
+					u.name AS user_name,
+					u.id AS user_id
 				FROM diaries d
 				INNER JOIN users u ON d.user_id = u.id
 				WHERE d.id = :id
