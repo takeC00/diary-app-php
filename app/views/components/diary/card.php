@@ -1,7 +1,6 @@
 <article class="diary-card">
 	<a href="/show/<?= htmlspecialchars($diary['id'], ENT_QUOTES, 'UTF-8') ?>">
-		<img src="/images/default.png" alt="日記画像" class="diary-image">
-
+	<img src="<?= htmlspecialchars($diary['image'] ?: '/images/default.png', ENT_QUOTES, 'UTF-8') ?>" alt="日記画像" class="diary-image">
 		<h2 class="diary-title">
 			<?= htmlspecialchars($diary['title'], ENT_QUOTES, 'UTF-8'); ?>
 		</h2>

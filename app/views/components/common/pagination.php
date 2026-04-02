@@ -9,7 +9,7 @@
 				?>
 
 				<?php if ($isLastPage): ?>
-					<button class="page-button arrow gray">></button>
+					<button class="page-button arrow gray"><</button>
 				<?php else: ?>
 					<a href="?page=<?= $nextPage ?>" class="page-button arrow"><</a>
 				<?php endif; ?>

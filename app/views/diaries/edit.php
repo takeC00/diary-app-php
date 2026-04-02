@@ -26,11 +26,6 @@
 							<div class="background-white">
 								<img src="<?= $diary['image'] ? $diary['image'] : '/images/default.png' ; ?>" alt="">
 							</div>
-							<?php if (!empty($diary['image'])): ?>
-							<p>現在の画像：<?= htmlspecialchars($diary['image'], ENT_QUOTES, 'UTF-8') ?></p>
-							<?php else: ?>
-							<p class="">画像は登録されていません</p>
-							<?php endif; ?>
 						</div>
 
 						<div class="detail">

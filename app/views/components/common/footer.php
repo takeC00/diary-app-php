@@ -24,18 +24,20 @@
 				</li>
 
 				<li class="">
-					<a href="#" class="">
+					<a href="diaries" class="">
 						公開日記
 					</a>
 				</li>
 
+				<?php if(!empty($_SESSION['user'])) :?>
 				<li class="">
-					<form method="POST" action="{{ route('logout') }}" class="">
+					<form method="POST" action="/logout" class="">
 						<button type="submit" class="">
 							ログアウト
 						</button>
 					</form>
 				</li>
+				<?php endif ;?>
 			</ul>
 		</nav>
 	</div>

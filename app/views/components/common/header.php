@@ -36,7 +36,7 @@
 				</li>
 
 				<li class="">
-					<a href="#" class="">
+					<a href="diaries" class="">
 						公開日記
 					</a>
 				</li>
