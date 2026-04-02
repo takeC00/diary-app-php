@@ -83,4 +83,74 @@ class DiaryController
 
 			require __DIR__ . '/../views/diaries/show.php';
     }
+		public function editPage($id): void
+    {
+			requireLogin();
+			global $pdo;
+
+			$sql = "
+				SELECT
+					d.*,
+					u.name AS user_name,
+					u.id AS user_id
+				FROM diaries d
+				INNER JOIN users u ON d.user_id = u.id
+				WHERE d.id = :id
+			";
+
+			$stmt = $pdo->prepare($sql);
+			$stmt->bindValue(':id', $id, PDO::PARAM_INT);
+			$stmt->execute();
+
+			$diary = $stmt->fetch(PDO::FETCH_ASSOC);
+
+			require __DIR__ . '/../views/diaries/edit.php';
+    }
+
+		public function edit($id): void
+    {
+			requireLogin();
+			global $pdo;
+
+			// 更新SQL
+			$title = $_POST['title'] ?? '';
+			$diary_date = $_POST['diary_date'] ?? '';
+			$diary_image = $_POST['diary_image'] ?? '';
+
+			$sql = "
+				UPDATE diaries d
+				SET
+					title = :title,
+					diary_date = :diary_date,
+					image = :diary_image
+				WHERE d.id = :id
+			";
+
+			$stmt = $pdo->prepare($sql);
+			$stmt->bindValue(':id', $id, PDO::PARAM_INT);
+			$stmt->bindValue(':title', $title, PDO::PARAM_STR_CHAR);
+			$stmt->bindValue(':diary_date', $diary_date, PDO::PARAM_STR_CHAR);
+			$stmt->bindValue(':diary_image', $diary_image, PDO::PARAM_STR_CHAR);
+			$stmt->execute();
+
+			// 画面表示SQL
+			$sql = "
+				SELECT
+					d.*,
+					u.name AS user_name,
+					u.id AS user_id
+				FROM diaries d
+				INNER JOIN users u ON d.user_id = u.id
+				WHERE d.id = :id
+			";
+
+			$stmt = $pdo->prepare($sql);
+			$stmt->bindValue(':id', $id, PDO::PARAM_INT);
+			$stmt->execute();
+
+			$diary = $stmt->fetch(PDO::FETCH_ASSOC);
+
+			$_SESSION['success'] = "更新しました";
+			require __DIR__ . '/../views/diaries/show.php';
+    }
 }

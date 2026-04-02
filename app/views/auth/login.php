@@ -13,7 +13,7 @@
 			<?php endif; ?>
 			<?php if (!empty($_SESSION['error'])): ?>
 			<?php foreach ($_SESSION['error'] as $error) :?>
-			<p style="color: red;">
+			<p class="error-message">
 				<?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?>
 			</p>
 			<?php endforeach ;?>

@@ -60,5 +60,21 @@ if ($path === '/logout' && $method=='POST') {
 	exit;
 }
 
+// /edit/:id で編集ページを表示
+if (preg_match('#^/edit/(\d+)$#', $path, $matches) && $method=='GET') {
+	$id = (int)$matches[1];
+	$controller = new DiaryController();
+	$controller->editPage($id);
+	exit;
+}
+
+// /edit/:id で日記更新
+if (preg_match('#^/edit/(\d+)$#', $path, $matches) && $method=='POST') {
+	$id = (int)$matches[1];
+	$controller = new DiaryController();
+	$controller->edit($id);
+	exit;
+}
+
 http_response_code(404);
 echo '404 Not Found';

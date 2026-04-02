@@ -1,0 +1,27 @@
+/*******************************
+* 編集画面
+********************************/
+
+/* 更新ボタン */
+.update-button {
+	display: flex;
+	justify-content: right;
+}
+
+.update-button button{
+	display: block;
+	padding: 10px 20px;
+	background-color: blanchedalmond;
+	border-radius: 10px;
+	border: 5px solid rgba(83, 83, 83, 0.356);
+	text-decoration: none;
+	color: black;
+}
+.update-button button:hover{
+	background-color: rgb(147 197 253);
+	color: white;
+}
+
+.mini-title {
+	font-size:20px;
+}

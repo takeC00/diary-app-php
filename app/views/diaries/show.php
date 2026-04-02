@@ -4,13 +4,20 @@
 <body>
 	<main>
 		<section>
-				<div class="button-section">
-					<?php if (isOwner($diary)&&isLogin()): ?>
-						<a href="/edit/<?= htmlspecialchars($diary['id'], ENT_QUOTES, 'UTF-8') ?>"><button class="edit">編集</button></a>
-						<a href="/delete/<?= htmlspecialchars($diary['id'], ENT_QUOTES, 'UTF-8') ?>"><button class="delete">削除</button></a>
-					<?php endif ;?>
-					<a href="/"><button class="back">戻る</button></a>
-				</div>
+			<?php if (!empty($_SESSION['success'])): ?>
+			<p class="green-message">
+				<?= htmlspecialchars($_SESSION['success'], ENT_QUOTES, 'UTF-8') ?>
+			</p>
+			<?php unset($_SESSION['success']); ?>
+			<?php endif; ?>
+			<div class="button-section">
+				<?php if (isOwner($diary)&&isLogin()): ?>
+				<a href="/edit/<?= htmlspecialchars($diary['id'], ENT_QUOTES, 'UTF-8') ?>"><button class="edit">編集</button></a>
+				<a href="/delete/<?= htmlspecialchars($diary['id'], ENT_QUOTES, 'UTF-8') ?>"><button
+						class="delete">削除</button></a>
+				<?php endif ;?>
+				<a href="/"><button class="back">戻る</button></a>
+			</div>
 
 
 			<div class="detail-section">
@@ -25,7 +32,7 @@
 						<p>タイトル：<?= $diary['title'] ?></p>
 						<p>日付：<?= $diary['diary_date'] ?></p>
 						<p>作者：<?= $diary['user_name'] ?></p>
-						</div>
+					</div>
 				</div>
 				<div class="detail-text">
 					<p class="detail-body">
