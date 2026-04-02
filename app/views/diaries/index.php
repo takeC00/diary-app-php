@@ -5,11 +5,11 @@
 	<main>
 		<section>
 			<div>
-				<div class="diary-list">
-					<?php foreach ($diaries as $diary): ?>
+			<div class="diary-list">
+				<?php foreach ($diaries as $diary): ?>
 					<?php require('../app/views/components/diary/card.php') ?>
-					<?php endforeach; ?>
-				</div>
+				<?php endforeach; ?>
+			</div>
 			</div>
 			<?php require('../app/views/components/common/pagination.php') ?>
 		</section>

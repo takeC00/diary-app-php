@@ -111,28 +111,6 @@ class DiaryController
     {
 			requireLogin();
 			global $pdo;
-
-			// 更新SQL
-			$title = $_POST['title'] ?? '';
-			$diary_date = $_POST['diary_date'] ?? '';
-			$diary_image = $_POST['diary_image'] ?? '';
-
-			$sql = "
-				UPDATE diaries d
-				SET
-					title = :title,
-					diary_date = :diary_date,
-					image = :diary_image
-				WHERE d.id = :id
-			";
-
-			$stmt = $pdo->prepare($sql);
-			$stmt->bindValue(':id', $id, PDO::PARAM_INT);
-			$stmt->bindValue(':title', $title, PDO::PARAM_STR_CHAR);
-			$stmt->bindValue(':diary_date', $diary_date, PDO::PARAM_STR_CHAR);
-			$stmt->bindValue(':diary_image', $diary_image, PDO::PARAM_STR_CHAR);
-			$stmt->execute();
-
 			// 画面表示SQL
 			$sql = "
 				SELECT
@@ -150,7 +128,68 @@ class DiaryController
 
 			$diary = $stmt->fetch(PDO::FETCH_ASSOC);
 
+			// ファイルアップロード
+			if (!empty($_FILES['diary_image']['name'])) {
+
+				$file = $_FILES['diary_image'];
+
+				// エラーチェック
+				if ($file['error'] !== UPLOAD_ERR_OK) {
+						$_SESSION['error']['image'] = 'アップロードに失敗しました';
+						header('Location: /edit/' . $id);
+						exit;
+				}
+				// 拡張子取得
+				$ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+
+				// ファイル名生成（ユニーク）
+				$fileName = uniqid() . '.' . $ext;
+
+				// 保存先
+				$uploadDir = BASE_PATH . '/public/images/uploads/';
+				$savePath = $uploadDir . $fileName;
+
+				// 移動
+				if (!move_uploaded_file($file['tmp_name'], $savePath)) {
+						$_SESSION['error']['image'] = '保存に失敗しました';
+						header('Location: /edit/' . $id);
+						exit;
+				}
+				// DBに保存するパス
+				$imagePath = '/images/uploads/' . $fileName;
+			} else {
+				// 画像変更なし
+				$imagePath = $diary['image'];
+			}
+
+			// 更新SQL
+			$title = $_POST['title'] ?? '';
+			$diary_date = $_POST['diary_date'] ?? '';
+			$diary_image = $imagePath ?? '';
+			$body = $_POST['body'] ?? '';
+
+			$sql = "
+				UPDATE diaries d
+				SET
+					title = :title,
+					diary_date = :diary_date,
+					image = :diary_image,
+					body = :body
+				WHERE d.id = :id
+			";
+
+			$stmt = $pdo->prepare($sql);
+			$stmt->bindValue(':id', $id, PDO::PARAM_INT);
+			$stmt->bindValue(':title', $title, PDO::PARAM_STR_CHAR);
+			$stmt->bindValue(':diary_date', $diary_date, PDO::PARAM_STR_CHAR);
+			$stmt->bindValue(':diary_image', $diary_image, PDO::PARAM_STR_CHAR);
+			$stmt->bindValue(':body', $body, PDO::PARAM_STR_CHAR);
+
+			$stmt->execute();
+
+
+
 			$_SESSION['success'] = "更新しました";
-			require __DIR__ . '/../views/diaries/show.php';
+			header('Location: /show/' . $id);
     }
 }

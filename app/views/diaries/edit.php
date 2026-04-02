@@ -4,6 +4,12 @@
 <body>
 	<main>
 		<section>
+			<?php if (!empty($_SESSION['error']['image'])): ?>
+			<p class="error-message">
+				<?= htmlspecialchars($_SESSION['error']['image'], ENT_QUOTES, 'UTF-8') ?>
+			</p>
+			<?php unset($_SESSION['error']['image']); ?>
+			<?php endif; ?>
 			<div class="button-section">
 				<?php if (isOwner($diary)&&isLogin()): ?>
 				<a href="/edit/<?= htmlspecialchars($diary['id'], ENT_QUOTES, 'UTF-8') ?>"><button class="edit">編集</button></a>
@@ -13,7 +19,7 @@
 				<a href="/"><button class="back">戻る</button></a>
 			</div>
 
-			<form action="/edit/<?= $diary['id'] ?>" method="POST">
+			<form action="/edit/<?= $diary['id'] ?>" method="POST" enctype="multipart/form-data">
 				<div class="detail-section">
 					<div class="diary-detail flex">
 						<div class="img">
@@ -36,7 +42,7 @@
 					</div>
 					<div class="detail-text">
 						<p class="detail-body">
-							<textarea class=""><?= $diary['body'] ?></textarea>
+							<textarea name='body' class=""><?= $diary['body'] ?></textarea>
 						</p>
 					</div>
 					<div class="update-button">
