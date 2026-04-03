@@ -44,8 +44,10 @@ img {
 	border-color: rgba(83, 83, 83, 0.356);
 }
 
-.button-section{
-	text-align: right;
+.button-section {
+	display: flex;
+	justify-content: flex-end; /* ←これが本命 */
+	gap: 10px;                 /* ボタン間の余白 */
 }
 
 button.edit:hover{

@@ -192,4 +192,24 @@ class DiaryController
 			$_SESSION['success'] = "更新しました";
 			header('Location: /show/' . $id);
     }
+
+		public function delete($id): void
+    {
+			requireLogin();
+			global $pdo;
+
+			// 画面表示SQL
+			$sql = "
+				DELETE
+				FROM diaries d
+				WHERE d.id = :id
+			";
+
+			$stmt = $pdo->prepare($sql);
+			$stmt->bindValue(':id', $id, PDO::PARAM_INT);
+			$stmt->execute();
+
+			$_SESSION['success'] = "削除しました";
+			header('Location: /');
+    }
 }

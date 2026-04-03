@@ -76,5 +76,13 @@ if (preg_match('#^/edit/(\d+)$#', $path, $matches) && $method=='POST') {
 	exit;
 }
 
+// /delete/:id で日記削除
+if (preg_match('#^/delete/(\d+)$#', $path, $matches) && $method=='POST') {
+	$id = (int)$matches[1];
+	$controller = new DiaryController();
+	$controller->delete($id);
+	exit;
+}
+
 http_response_code(404);
 echo '404 Not Found';
