@@ -23,10 +23,13 @@
 		<!-- ナビ -->
 		<nav class="right">
 			<ul class="flex right">
+				<?php if(!empty($_SESSION['user'])) :?>
 				<li class="">
-					<a href="/diaries" class="">
-						自分日記
-					</a>
+					<form method="GET" action="/myDiaries" class="">
+						<button type="submit" class="">
+							自分日記一覧
+						</button>
+					</form>
 				</li>
 
 				<li class="">
@@ -41,7 +44,6 @@
 					</a>
 				</li>
 
-				<?php if(!empty($_SESSION['user'])) :?>
 				<li class="">
 					<form method="POST" action="/logout" class="">
 						<button type="submit" class="">

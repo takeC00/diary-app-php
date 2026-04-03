@@ -11,6 +11,7 @@
 		<!-- ナビ -->
 		<nav class="">
 			<ul class="flex">
+			<?php if(!empty($_SESSION['user'])) :?>
 				<li class="">
 					<a href="#" class="">
 						自分日記
@@ -29,7 +30,7 @@
 					</a>
 				</li>
 
-				<?php if(!empty($_SESSION['user'])) :?>
+
 				<li class="">
 					<form method="POST" action="/logout" class="">
 						<button type="submit" class="">

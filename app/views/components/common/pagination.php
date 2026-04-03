@@ -4,11 +4,11 @@
 
 				<!-- 1ページ目は戻るボタン無効化 -->
 				<?php
-					$isLastPage = ($page === $totalPages);
+					$isFirstPage = ($page === 1);
 					$nextPage = $page - 1;
 				?>
 
-				<?php if ($isLastPage): ?>
+				<?php if ($isFirstPage): ?>
 					<button class="page-button arrow gray"><</button>
 				<?php else: ?>
 					<a href="?page=<?= $nextPage ?>" class="page-button arrow"><</a>

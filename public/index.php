@@ -6,6 +6,7 @@ session_start();
 
 require_once __DIR__ . '/../app/controllers/DiaryController.php';
 require_once __DIR__ . '/../app/controllers/LoginController.php';
+require_once __DIR__ . '/../app/controllers/MyDiaryController.php';
 
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $method = $_SERVER['REQUEST_METHOD'];
@@ -83,6 +84,15 @@ if (preg_match('#^/delete/(\d+)$#', $path, $matches) && $method=='POST') {
 	$controller->delete($id);
 	exit;
 }
+
+// /myDiaries で自分日記一覧
+if ($path === '/myDiaries' && $method=='GET') {
+	$id = $_SESSION['user']['id'];
+	$controller = new MyDiaryController();
+	$controller->index($id);
+	exit;
+}
+
 
 http_response_code(404);
 echo '404 Not Found';
