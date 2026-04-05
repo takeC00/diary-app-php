@@ -1,6 +1,9 @@
 <?php require('../app/views/components/common/head.php') ?>
 <?php require('../app/views/components/common/header.php') ?>
 
+<!-- 戻るボタンの制御のためどこの一覧ページか判別 -->
+<?php $from = 'public'; ?>
+
 <body>
 	<main>
 		<section>

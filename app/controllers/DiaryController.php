@@ -81,6 +81,15 @@ class DiaryController
 
 			$diary = $stmt->fetch(PDO::FETCH_ASSOC);
 
+			// 戻るボタンの戻り先の設定
+			$from = $_GET['from'] ?? 'public';
+			$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+			if ($from === 'my') {
+				$backUrl = "/myDiaries?page=$page";
+			} else {
+				$backUrl = "/?page=$page";
+			}
+
 			require __DIR__ . '/../views/diaries/show.php';
     }
 		public function editPage($id): void

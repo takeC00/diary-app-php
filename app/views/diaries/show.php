@@ -18,7 +18,8 @@
 					<button type="submit" class="delete">削除</button>
 				</form>
 				<?php endif ;?>
-				<a href="/"><button class="back">戻る</button></a>
+
+				<a href="<?= htmlspecialchars($backUrl, ENT_QUOTES, 'UTF-8') ?>" class="btn">戻る</a>
 			</div>
 
 
