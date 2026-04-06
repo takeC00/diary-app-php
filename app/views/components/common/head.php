@@ -12,4 +12,6 @@
 	<link rel="stylesheet" href="/css/detail.css">
 	<link rel="stylesheet" href="/css/register.css">
 	<link rel="stylesheet" href="/css/edit.css">
+	<link rel="stylesheet" href="/css/userPage.css">
+
 </head>

@@ -7,6 +7,7 @@ session_start();
 require_once __DIR__ . '/../app/controllers/DiaryController.php';
 require_once __DIR__ . '/../app/controllers/LoginController.php';
 require_once __DIR__ . '/../app/controllers/MyDiaryController.php';
+require_once __DIR__ . '/../app/controllers/MyPageController.php';
 
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $method = $_SERVER['REQUEST_METHOD'];
@@ -93,6 +94,20 @@ if ($path === '/myDiaries' && $method=='GET') {
 	exit;
 }
 
+// /myPage/:id で、マイページ
+if (preg_match('#^/myPage/(\d+)$#', $path, $matches) && $method=='GET') {
+	$id = (int)$matches[1];
+	$controller = new MyPageController();
+	$controller->show($id);
+	exit;
+}
 
+// /myPage/edit/:id で、マイページ更新
+if (preg_match('#^/myPage/edit/(\d+)$#', $path, $matches) && $method=='POST') {
+	$id = (int)$matches[1];
+	$controller = new MyPageController();
+	$controller->edit($id);
+	exit;
+}
 http_response_code(404);
 echo '404 Not Found';

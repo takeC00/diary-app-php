@@ -32,7 +32,7 @@
 							<p class="mini-title">タイトル：<input type="text" name="title" value="<?= $diary['title'] ?>"></p>
 							<p class="mini-title">日付：<input type="date" name="diary_date" value="<?= $diary['diary_date'] ?>"></p>
 							<p class="mini-title">画像：<input type="file" name="diary_image" id="imageInput"></p>
-							<img id="preview" style="max-width: 300px; display: none;">
+							<img id="preview" class="preview">
 						</div>
 					</div>
 					<div class="detail-text">

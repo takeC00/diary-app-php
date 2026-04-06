@@ -17,8 +17,9 @@
 					onsubmit="return confirm('削除しますか？');">
 					<button type="submit" class="delete">削除</button>
 				</form>
+				<?php else :?>
+					<a href="/myPage/<?= $diary['user_id'] ?>" class="btn my-page">この人の日記一覧を見る</a>
 				<?php endif ;?>
-
 				<a href="<?= htmlspecialchars($backUrl, ENT_QUOTES, 'UTF-8') ?>" class="btn">戻る</a>
 			</div>
 

@@ -25,21 +25,17 @@
 			<ul class="flex right">
 				<?php if(!empty($_SESSION['user'])) :?>
 				<li class="">
-					<form method="GET" action="/myDiaries" class="">
-						<button type="submit" class="">
-							自分日記一覧
-						</button>
-					</form>
+					<a href="/myDiaries">自分日記一覧</a>
 				</li>
 
 				<li class="">
-					<a href="#" class="">
+					<a href="/myPage/<?= $_SESSION['user']['id'] ?>">
 						マイページ
 					</a>
 				</li>
 
 				<li class="">
-					<a href="diaries" class="">
+					<a href="/" class="">
 						公開日記
 					</a>
 				</li>

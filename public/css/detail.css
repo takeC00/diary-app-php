@@ -2,6 +2,11 @@
   display: grid;
   grid-template-columns: repeat(2,1fr);
 	margin-bottom: 70px;
+	align-items: start;
+}
+
+.diary-detail.flex {
+  margin-top: 30px;
 }
 
 img {
@@ -77,5 +82,10 @@ button.back:hover{
 
 .btn:hover {
 	background-color: rgb(147 197 253);
+	color: white;
+}
+
+.btn.my-page:hover {
+	background-color: rgb(90, 188, 129);
 	color: white;
 }

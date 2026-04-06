@@ -25,7 +25,7 @@
 				</li>
 
 				<li class="">
-					<a href="diaries" class="">
+					<a href="/" class="">
 						公開日記
 					</a>
 				</li>
