@@ -24,13 +24,16 @@
 						<p><?= $diaries[0]['introduction'] ?></p>
 					<?php endif ;?>
 				</div>
-				<div class="user-diary-grid">
-					<?php foreach ($diaries as $diary): ?>
-					<a href="/show/<?= (int)$diary['id'] ?>?from=public&page=<?= (int)$page ?>" class="grid-item">
-						<img src="<?= !empty($diary['image']) ? $diary['image'] : '/images/default.png'; ?>">
-					</a>
-					<?php endforeach; ?>
-				</div>
+				<div>
+						<p class="mini-title">日記一覧：</p>
+						<div class="user-diary-grid">
+							<?php foreach ($diaries as $diary): ?>
+							<a href="/show/<?= (int)$diary['id'] ?>?from=public&page=<?= (int)$page ?>" class="grid-item">
+								<img src="<?= !empty($diary['image']) ? $diary['image'] : '/images/default.png'; ?>">
+							</a>
+							<?php endforeach; ?>
+						</div>
+					</div>
 			</div>
 			<div class="user-diaries">
 				<?php require('../app/views/components/common/pagination.php') ?>

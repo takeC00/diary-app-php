@@ -18,12 +18,21 @@ class MyPageController
 
 		$perPage = PER_PAGE;
 
-		$countSql = "
-			SELECT COUNT(*)
-			FROM diaries
-			WHERE is_public = 1
-			AND user_id = :id
-		";
+		if($id !== $_SESSION['user']['id']){
+			$countSql = "
+				SELECT COUNT(*)
+				FROM diaries
+				WHERE is_public = 1
+				AND user_id = :id
+			";
+		}else{
+			$countSql = "
+				SELECT COUNT(*)
+				FROM diaries
+				WHERE user_id = :id
+			";
+		}
+
 		$countStmt = $pdo->prepare($countSql);
 		$countStmt->bindValue(':id', $id, PDO::PARAM_INT);
 		$countStmt->execute();
@@ -41,7 +50,8 @@ class MyPageController
 		// 表示ページに応じて取得するデータスキップ
 		$offset = ($page -1) * $perPage;
 
-		$sql = "
+		if($id !== $_SESSION['user']['id']){
+			$sql = "
 				SELECT
 						d.*,
 						u.name,
@@ -54,7 +64,22 @@ class MyPageController
 				ORDER BY d.diary_date DESC
 				LIMIT :limit
 				OFFSET :offset
-		";
+			";
+		}else{
+			$sql = "
+				SELECT
+						d.*,
+						u.name,
+						u.icon,
+						u.introduction
+				FROM diaries d
+				INNER JOIN users u ON d.user_id = u.id
+				WHERE u.id = :id
+				ORDER BY d.diary_date DESC
+				LIMIT :limit
+				OFFSET :offset
+			";
+		}
 
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindValue(':id', $id, PDO::PARAM_INT);

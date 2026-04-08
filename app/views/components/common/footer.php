@@ -12,10 +12,13 @@
 		<nav class="">
 			<ul class="flex">
 			<?php if(!empty($_SESSION['user'])) :?>
+
 				<li class="">
-					<a href="#" class="">
-						自分日記
-					</a>
+					<a href="/diary/create">新規作成</a>
+				</li>
+
+				<li class="">
+					<a href="/myDiaries">自分日記一覧</a>
 				</li>
 
 				<li class="">

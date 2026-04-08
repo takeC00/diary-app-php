@@ -6,7 +6,9 @@
 
 <body>
 	<main>
+
 		<section>
+		<h1>公開日記一覧</h1>
 			<div>
 				<?php if (!empty($_SESSION['success'])): ?>
 				<p class="green-message">

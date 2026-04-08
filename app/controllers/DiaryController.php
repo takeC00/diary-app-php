@@ -177,6 +177,30 @@ class DiaryController
 			$diary_image = $imagePath ?? '';
 			$body = $_POST['body'] ?? '';
 
+			// 必須チェック
+			$title = $_POST['title'] ?? '';
+			$diary_date = $_POST['diary_date'] ?? '';
+			$body = $_POST['body'] ?? '';
+			$is_public = $_POST['is_public'] ?? '';
+
+			if (empty($title)){
+				$_SESSION['error']['title'] = 'タイトルは必須です';
+			}
+			if (empty($diary_date)){
+				$_SESSION['error']['diary_date'] = '日付は必須です';
+			}
+			if (empty($body)){
+				$_SESSION['error']['body'] = '本文は必須です';
+			}
+			if (empty($file)){
+				$_SESSION['error']['image'] = '画像は必須です';
+			}
+
+			if(!empty($_SESSION['error'])){
+				header('Location: /edit/'.$id);
+				exit;
+			}
+
 			$sql = "
 				UPDATE diaries d
 				SET
@@ -220,5 +244,103 @@ class DiaryController
 
 			$_SESSION['success'] = "削除しました";
 			header('Location: /');
+    }
+
+		public function createPage(): void
+    {
+			requireLogin();
+
+			require __DIR__ . '/../views/diaries/create.php';
+    }
+
+		public function create(): void
+    {
+			requireLogin();
+			global $pdo;
+
+			// ファイルアップロード
+			if (!empty($_FILES['diary_image']['name'])) {
+
+				$file = $_FILES['diary_image'];
+
+				// エラーチェック
+				if ($file['error'] !== UPLOAD_ERR_OK) {
+						$_SESSION['error']['image'] = 'アップロードに失敗しました';
+						header('Location: /diary/create');
+						exit;
+				}
+				// 拡張子取得
+				$ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+
+				// ファイル名生成（ユニーク）
+				$fileName = uniqid() . '.' . $ext;
+
+				// 保存先
+				$uploadDir = BASE_PATH . '/public/images/uploads/';
+				$savePath = $uploadDir . $fileName;
+
+				// 移動
+				if (!move_uploaded_file($file['tmp_name'], $savePath)) {
+						$_SESSION['error']['image'] = '保存に失敗しました';
+						header('Location: /diary/create');
+						exit;
+				}
+				// DBに保存するパス
+				$imagePath = '/images/uploads/' . $fileName;
+			}
+
+			// 必須チェック
+			$title = $_POST['title'] ?? '';
+			$diary_date = $_POST['diary_date'] ?? '';
+			$body = $_POST['body'] ?? '';
+			$is_public = $_POST['is_public'] ?? '';
+
+			$_SESSION['old']['title'] = $title;
+			$_SESSION['old']['diary_date'] = $diary_date;
+			$_SESSION['old']['body'] = $body;
+			$_SESSION['old']['is_public'] = $is_public;
+
+			if (empty($title)){
+				$_SESSION['error']['title'] = 'タイトルは必須です';
+			}
+			if (empty($diary_date)){
+				$_SESSION['error']['diary_date'] = '日付は必須です';
+			}
+			if (empty($is_public)){
+				$_SESSION['error']['is_public'] = '公開設定は必須です';
+			}
+			if (empty($body)){
+				$_SESSION['error']['body'] = '本文は必須です';
+			}
+			if (empty($file)){
+				$_SESSION['error']['image'] = '画像は必須です';
+			}
+
+			if(!empty($_SESSION['error'])){
+				header('Location: /diary/create');
+				exit;
+			}
+
+
+			// 更新SQL
+			$sql = "
+				INSERT INTO diaries (user_id, title, diary_date, image, body, is_public, created_at, updated_at)
+				VALUES (:user_id, :title, :diary_date, :image, :body, :is_public, NOW(), NOW())
+			";
+
+			$stmt = $pdo->prepare($sql);
+			$stmt->bindValue(':user_id', $_SESSION['user']['id'], PDO::PARAM_INT);
+			$stmt->bindValue(':title', $title, PDO::PARAM_STR);
+			$stmt->bindValue(':diary_date', $diary_date, PDO::PARAM_STR);
+			$stmt->bindValue(':image', $imagePath, PDO::PARAM_STR);
+			$stmt->bindValue(':body', $body, PDO::PARAM_STR);
+			$stmt->bindValue(':is_public', $is_public, PDO::PARAM_INT);
+
+			$stmt->execute();
+
+			$_SESSION['success'] = "新規作成しました";
+			unset($_SESSION['old']);
+			header('Location: /myDiaries');
+			exit;
     }
 }

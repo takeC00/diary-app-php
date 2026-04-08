@@ -24,6 +24,12 @@
 		<nav class="right">
 			<ul class="flex right">
 				<?php if(!empty($_SESSION['user'])) :?>
+
+				<li class="">
+					<a href="/diary/create">新規作成</a>
+				</li>
+
+
 				<li class="">
 					<a href="/myDiaries">自分日記一覧</a>
 				</li>

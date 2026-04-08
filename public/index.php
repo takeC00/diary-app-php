@@ -109,5 +109,19 @@ if (preg_match('#^/myPage/edit/(\d+)$#', $path, $matches) && $method=='POST') {
 	$controller->edit($id);
 	exit;
 }
+
+// /diary/create/ で、日記新規作成ページ
+if ($path =='/diary/create' && $method=='GET') {
+	$controller = new DiaryController();
+	$controller->createPage();
+	exit;
+}
+
+// /diary/create/ で、日記新規作成
+if ($path =='/diary/create' && $method=='POST') {
+	$controller = new DiaryController();
+	$controller->create();
+	exit;
+}
 http_response_code(404);
 echo '404 Not Found';
