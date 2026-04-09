@@ -5,41 +5,74 @@
 	<main>
 		<section>
 			<?php if (!empty($_SESSION['error'])): ?>
-				<?php foreach ($_SESSION['error'] as $error) :?>
-					<p class="error-message">
-						<?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?>
-					</p>
-				<?php endforeach ;?>
+			<?php foreach ($_SESSION['error'] as $error) :?>
+			<p class="error-message">
+				<?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?>
+			</p>
+			<?php endforeach ;?>
 			<?php endif; ?>
 			<div class="button-section">
 				<a href="/"><button class="back">戻る</button></a>
 			</div>
+			<div class="detail-section">
+				<div class="diary-detail flex">
+					<div class="img">
+						<div class="background-white">
+							<img src="<?= $diary['image'] ? $diary['image'] : '/images/default.png' ; ?>" alt="" id="preview" class="">
+						</div>
+					</div>
+					<form action="/edit/<?= $diary['id'] ?>" method="POST" enctype="multipart/form-data">
+						<div class="form-row">
+							<p class="mini-title">タイトル：</p>
+							<input type="text" name="title"
+								value="<?= !empty($_SESSION['old']['title']) ? htmlspecialchars($_SESSION['old']['title'], ENT_QUOTES, 'UTF-8'): $diary['title'] ;?>"
+								class="<?= !empty($_SESSION['error']['title']) ? 'error' : '' ?>">
+						</div>
 
-			<form action="/edit/<?= $diary['id'] ?>" method="POST" enctype="multipart/form-data">
-				<div class="detail-section">
-					<div class="diary-detail flex">
-						<div class="img">
-							<div class="background-white">
-								<img id="preview" src="<?= $diary['image'] ? $diary['image'] : '/images/default.png' ; ?>" alt="">
+						<div class="form-row">
+							<p class="mini-title">日付：</p>
+							<input type="date" name="diary_date"
+								value="<?= !empty($_SESSION['old']['diary_date']) ? htmlspecialchars($_SESSION['old']['diary_date'], ENT_QUOTES, 'UTF-8'): $diary['diary_date'] ;?>"
+								class="<?= !empty($_SESSION['error']['diary_date']) ? 'error' : '' ?>">
+						</div>
+
+						<div class="form-row">
+							<p class="mini-title">画像：</p>
+							<div>
+								<input type="file" name="diary_image" id="imageInput"
+									class="<?= !empty($_SESSION['error']['image']) ? 'error' : $diary['image'] ?>">
 							</div>
 						</div>
 
-						<div class="detail">
-							<p class="mini-title">タイトル：<input type="text" name="title" value="<?= $diary['title'] ?>" class="<?= !empty($_SESSION['error']['title']) ? 'error' : ''?>"></p>
-							<p class="mini-title">日付：<input type="date" name="diary_date" value="<?= $diary['diary_date'] ?>" class="<?= !empty($_SESSION['error']['diary_date']) ? 'error' : ''?>"></p>
-							<p class="mini-title">画像：<input type="file" name="diary_image" id="imageInput" class="<?= !empty($_SESSION['error']['image']) ? 'error' : ''?>"></p>
+						<div class="form-row">
+							<p class="mini-title public">公開設定：</p>
+							<div class="radio-group">
+								<?php	$oldIsPublic = $_SESSION['old']['is_public'] ?? '1'; ?>
+
+								<label>
+									<input type="radio" name="is_public" value="1" <?= $oldIsPublic === '1' ? 'checked' : $diary['is_public'] ?>>
+									公開
+								</label>
+
+								<label>
+									<input type="radio" name="is_public" value="0" <?= $oldIsPublic === '0' ? 'checked' : $diary['is_public'] ?>>
+									非公開
+								</label>
+							</div>
 						</div>
-					</div>
-					<div class="detail-text">
-						<p class="detail-body">
-							<textarea name='body' class="<?= !empty($_SESSION['error']['body']) ? 'error' : ''?>"><?= $diary['body'] ?></textarea>
-						</p>
-					</div>
-					<div class="update-button">
-						<button class="" type="submit">更新</button>
-					</div>
+
+						<div class="form-row">
+							<p class="mini-title">本文：</p>
+							<textarea class="<?= !empty($_SESSION['error']['body']) ? 'error' : '' ?>"
+								name="body"><?= !empty($_SESSION['old']['body']) ? htmlspecialchars($_SESSION['old']['body'], ENT_QUOTES, 'UTF-8'): $diary['body'] ;?></textarea>
+						</div>
+
+						<div class="button-section">
+							<button class="create" type="submit">更新</button>
+						</div>
+					</form>
 				</div>
-			</form>
+			</div>
 		</section>
 	</main>
 	<?php unset($_SESSION['error']) ;?>
