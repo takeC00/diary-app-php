@@ -1,6 +1,5 @@
 <?php require('../app/views/components/common/head.php') ?>
 <?php require('../app/views/components/common/header.php') ?>
-
 <body>
 	<main>
 		<section>
@@ -12,7 +11,7 @@
 			<?php endforeach ;?>
 			<?php endif; ?>
 			<div class="button-section">
-				<a href="/"><button class="back">戻る</button></a>
+				<a href="<?= $backUrl ?>"><button class="back">戻る</button></a>
 			</div>
 			<div class="detail-section">
 				<div class="diary-detail flex">

@@ -1,6 +1,5 @@
 <?php require('../app/views/components/common/head.php') ?>
 <?php require('../app/views/components/common/header.php') ?>
-
 <body>
 	<main>
 		<section>
@@ -12,7 +11,7 @@
 			<?php endif; ?>
 			<div class="button-section">
 				<?php if (isOwner($diary)&&isLogin()): ?>
-				<a href="/edit/<?= htmlspecialchars($diary['id'], ENT_QUOTES, 'UTF-8') ?>"><button class="edit">編集</button></a>
+				<a href="/edit/<?= htmlspecialchars($diary['id'], ENT_QUOTES, 'UTF-8') ?>?from=show"><button class="edit">編集</button></a>
 				<form method="POST" action="/delete/<?= htmlspecialchars($diary['id'], ENT_QUOTES, 'UTF-8') ?>"
 					onsubmit="return confirm('削除しますか？');">
 					<button type="submit" class="delete">削除</button>

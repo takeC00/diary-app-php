@@ -101,8 +101,13 @@ class DiaryController
 			// 戻るボタンの戻り先の設定
 			$from = $_GET['from'] ?? 'public';
 			$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+
 			if ($from === 'my') {
 				$backUrl = "/myDiaries?page=$page";
+			}elseif ($from === 'show') {
+				$backUrl = "/show/$id?from=$from&page=$page";
+			}elseif ($from === 'myPage') {
+				$backUrl = "/myPage/$page";
 			} else {
 				$backUrl = "/?page=$page";
 			}
@@ -129,6 +134,20 @@ class DiaryController
 			$stmt->execute();
 
 			$diary = $stmt->fetch(PDO::FETCH_ASSOC);
+
+			// 戻るボタンの戻り先の設定
+			$from = $_GET['from'] ?? 'public';
+			$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+
+			if ($from === 'my') {
+				$backUrl = "/myDiaries?page=$page";
+			}elseif ($from === 'show') {
+				$backUrl = "/show/$id?from=$from&page=$page";
+			}elseif ($from === 'myPage') {
+				$backUrl = "/myPage/$page";
+			} else {
+				$backUrl = "/?page=$page";
+			}
 
 			require __DIR__ . '/../views/diaries/edit.php';
     }
