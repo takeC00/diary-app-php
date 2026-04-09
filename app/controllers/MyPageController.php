@@ -13,6 +13,23 @@ class MyPageController
 		requireLogin();
 		global $pdo;
 
+		// 存在しないユーザーID指定された場合
+		$sql = "
+			SELECT *
+			FROM users
+			WHERE id = :id
+		";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
+		$stmt->execute();
+		$user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+		if (!$user) {
+			$_SESSION['error']['common'] = '指定されたユーザーが存在しません';
+			header('Location: /');
+			exit;
+		}
+
 		$page = isset($_GET['page']) ? (int)$_GET['page'] : 1 ;
 		$page = max($page, 1);
 

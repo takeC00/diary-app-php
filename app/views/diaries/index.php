@@ -10,6 +10,14 @@
 		<section>
 		<h1>公開日記一覧</h1>
 			<div>
+				<?php if (!empty($_SESSION['error'])): ?>
+					<?php foreach($_SESSION['error'] as $error) :?>
+						<p class="error-message">
+							<?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?>
+						</p>
+					<?php endforeach ;?>
+					<?php unset($_SESSION['error']); ?>
+				<?php endif; ?>
 				<?php if (!empty($_SESSION['success'])): ?>
 				<p class="green-message">
 					<?= htmlspecialchars($_SESSION['success'], ENT_QUOTES, 'UTF-8') ?>

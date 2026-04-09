@@ -65,6 +65,23 @@ class DiaryController
 			requireLogin();
 			global $pdo;
 
+			// 存在しないユーザーID指定された場合
+			$sql = "
+				SELECT *
+				FROM users
+				WHERE id = :id
+			";
+			$stmt = $pdo->prepare($sql);
+			$stmt->bindValue(':id', $_SESSION['user']['id'], PDO::PARAM_INT);
+			$stmt->execute();
+			$user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+			if (!$user) {
+				$_SESSION['error']['common'] = '指定されたユーザーが存在しません';
+				header('Location: /');
+				exit;
+			}
+
 			$sql = "
 				SELECT
 					d.*,

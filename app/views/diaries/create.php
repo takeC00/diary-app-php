@@ -43,9 +43,7 @@
 				<div class="form-row">
 					<p class="mini-title public">公開設定：</p>
 					<div class="radio-group">
-						<?php
-$oldIsPublic = $_SESSION['old']['is_public'] ?? '1';
-?>
+						<?php	$oldIsPublic = $_SESSION['old']['is_public'] ?? '1'; ?>
 
 						<label>
 							<input type="radio" name="is_public" value="1" <?= $oldIsPublic === '1' ? 'checked' : '' ?>>
