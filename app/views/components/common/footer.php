@@ -4,7 +4,7 @@
 		<!-- ロゴ -->
 		<div class="">
 			<a href="/" class="flex">
-				<img src="/images/default.png" class="logo-mid">
+				<img src="/images/defaults/default.png" class="logo-mid">
 			</a>
 		</div>
 

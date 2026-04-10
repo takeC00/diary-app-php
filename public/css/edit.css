@@ -27,3 +27,26 @@
 	margin: 0;
 	margin-top: 20px;
 }
+
+.icon-list {
+	display: grid;
+	grid-template-columns: repeat(3, 80px); /* ←固定幅 */
+	gap: 8px; /* ←間隔も調整 */
+	justify-content: start; /* ←左寄せ */
+}
+
+.icon-list img {
+  width: 60px;
+  height: 60px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.icon-list input {
+  display: none;
+}
+
+.icon-list input:checked + img {
+  border-color: blue;
+}

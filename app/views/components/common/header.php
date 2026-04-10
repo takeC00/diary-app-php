@@ -3,7 +3,7 @@
 		<!-- ロゴ -->
 		<div class="flex">
 			<a href="/" class="flex">
-				<img src="/images/default.png" class="logo">
+				<img src="/images/defaults/default.png" class="logo">
 				<span class="">Photo Diary</span>
 			</a>
 			<!-- ハンバーガー -->

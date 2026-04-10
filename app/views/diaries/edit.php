@@ -17,7 +17,7 @@
 				<div class="diary-detail flex">
 					<div class="img">
 						<div class="background-white">
-							<img src="<?= $diary['image'] ? $diary['image'] : '/images/default.png' ; ?>" alt="" id="preview" class="">
+							<img src="<?= $diary['image'] ? $diary['image'] : '/images/defaults/default.png' ; ?>" alt="" id="preview" class="">
 						</div>
 					</div>
 					<form action="/edit/<?= $diary['id'] ?>" method="POST" enctype="multipart/form-data">

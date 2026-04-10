@@ -27,7 +27,7 @@
 				<div class="diary-detail flex">
 					<div class="img">
 						<div class="background-white">
-							<img src="<?= $diary['image'] ? $diary['image'] : '/images/default.png' ; ?>" alt="">
+							<img src="<?= $diary['image'] ? $diary['image'] : '/images/defaults/default.png' ; ?>" alt="">
 						</div>
 					</div>
 

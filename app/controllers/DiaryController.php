@@ -249,10 +249,10 @@ class DiaryController
 
 			$stmt = $pdo->prepare($sql);
 			$stmt->bindValue(':id', $id, PDO::PARAM_INT);
-			$stmt->bindValue(':title', $title, PDO::PARAM_STR_CHAR);
-			$stmt->bindValue(':diary_date', $diary_date, PDO::PARAM_STR_CHAR);
-			$stmt->bindValue(':diary_image', $diary_image, PDO::PARAM_STR_CHAR);
-			$stmt->bindValue(':body', $body, PDO::PARAM_STR_CHAR);
+			$stmt->bindValue(':title', $title, PDO::PARAM_STR);
+			$stmt->bindValue(':diary_date', $diary_date, PDO::PARAM_STR);
+			$stmt->bindValue(':diary_image', $diary_image, PDO::PARAM_STR);
+			$stmt->bindValue(':body', $body, PDO::PARAM_STR);
 
 			$stmt->execute();
 

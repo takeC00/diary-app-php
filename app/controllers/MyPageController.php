@@ -119,6 +119,7 @@ class MyPageController
 		global $pdo;
 
 		$introduction = trim($_POST['introduction'] ?? '');
+		$icon = trim($_POST['icon']);
 
 		// 既存ユーザー取得
 		$sql = "
@@ -136,32 +137,7 @@ class MyPageController
 			exit;
 		}
 
-		// アイコン画像アップロード
-		if (!empty($_FILES['icon']['name'])) {
-			$file = $_FILES['icon'];
 
-			if ($file['error'] !== UPLOAD_ERR_OK) {
-				$_SESSION['error']['common'] = 'アイコン画像のアップロードに失敗しました。';
-				header('Location: /myPage');
-				exit;
-			}
-
-			$ext = pathinfo($file['name'], PATHINFO_EXTENSION);
-			$fileName = uniqid() . '.' . $ext;
-
-			$uploadDir = BASE_PATH . '/public/images/uploads/';
-			$savePath = $uploadDir . $fileName;
-
-			if (!move_uploaded_file($file['tmp_name'], $savePath)) {
-				$_SESSION['error']['common'] = 'アイコン画像の保存に失敗しました。';
-				header('Location: /myPage');
-				exit;
-			}
-
-			$iconPath = '/images/uploads/' . $fileName;
-		} else {
-			$iconPath = $user['icon'];
-		}
 
 		$sql = "
 			UPDATE users
@@ -174,7 +150,7 @@ class MyPageController
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
 		$stmt->bindValue(':introduction', $introduction, PDO::PARAM_STR);
-		$stmt->bindValue(':icon', $iconPath, PDO::PARAM_STR);
+		$stmt->bindValue(':icon', $icon, PDO::PARAM_STR);
 		$stmt->execute();
 
 		$_SESSION['success'] = "更新しました";
