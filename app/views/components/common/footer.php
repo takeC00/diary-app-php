@@ -22,7 +22,7 @@
 				</li>
 
 				<li class="">
-					<a href="#" class="">
+					<a href="/myPage/<?= $_SESSION['user']['id'] ?>">
 						マイページ
 					</a>
 				</li>
