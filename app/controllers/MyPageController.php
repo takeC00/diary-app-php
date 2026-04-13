@@ -13,7 +13,6 @@ class MyPageController
 		requireLogin();
 		global $pdo;
 
-		// 存在しないユーザーID指定された場合
 		$sql = "
 			SELECT *
 			FROM users
@@ -24,9 +23,10 @@ class MyPageController
 		$stmt->execute();
 		$user = $stmt->fetch(PDO::FETCH_ASSOC);
 
+		// 存在しないユーザーID指定された場合
 		if (!$user) {
 			$_SESSION['error']['common'] = '指定されたユーザーが存在しません';
-			header('Location: /');
+			header('Location: /404');
 			exit;
 		}
 
@@ -118,9 +118,6 @@ class MyPageController
 		requireLogin();
 		global $pdo;
 
-		$introduction = trim($_POST['introduction'] ?? '');
-		$icon = trim($_POST['icon']);
-
 		// 既存ユーザー取得
 		$sql = "
 			SELECT *
@@ -136,7 +133,12 @@ class MyPageController
 			header('Location: /myPage');
 			exit;
 		}
-
+		$introduction = trim($_POST['introduction'] ?? '');
+		if (!empty($_POST['icon'])) {
+			$icon = trim($_POST['icon']);
+		} else {
+			$icon = $user['icon'];
+		}
 
 
 		$sql = "

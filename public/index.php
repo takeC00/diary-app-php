@@ -123,5 +123,7 @@ if ($path =='/diary/create' && $method=='POST') {
 	$controller->create();
 	exit;
 }
+
 http_response_code(404);
-echo '404 Not Found';
+require __DIR__ . '/../app/views/errors/404.php';
+exit;

@@ -46,17 +46,18 @@
 						<div class="form-row">
 							<p class="mini-title public">公開設定：</p>
 							<div class="radio-group">
-								<?php	$oldIsPublic = $_SESSION['old']['is_public'] ?? '1'; ?>
-
+							<?php	$currentIsPublic = isset($_SESSION['old']['is_public'])	? (string)$_SESSION['old']['is_public'] : (string)$diary['is_public']; ?>
+							<div class="radio-group">
 								<label>
-									<input type="radio" name="is_public" value="1" <?= $oldIsPublic === '1' ? 'checked' : $diary['is_public'] ?>>
+									<input type="radio" name="is_public" value="1" <?= $currentIsPublic === '1' ? 'checked' : '' ?>>
 									公開
 								</label>
 
 								<label>
-									<input type="radio" name="is_public" value="0" <?= $oldIsPublic === '0' ? 'checked' : $diary['is_public'] ?>>
+									<input type="radio" name="is_public" value="0" <?= $currentIsPublic === '0' ? 'checked' : '' ?>>
 									非公開
 								</label>
+							</div>
 							</div>
 						</div>
 

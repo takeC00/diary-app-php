@@ -65,7 +65,6 @@ class DiaryController
 			requireLogin();
 			global $pdo;
 
-			// 存在しないユーザーID指定された場合
 			$sql = "
 				SELECT *
 				FROM users
@@ -76,9 +75,10 @@ class DiaryController
 			$stmt->execute();
 			$user = $stmt->fetch(PDO::FETCH_ASSOC);
 
+			// 存在しないユーザーID指定された場合
 			if (!$user) {
 				$_SESSION['error']['common'] = '指定されたユーザーが存在しません';
-				header('Location: /');
+				header('Location: /404');
 				exit;
 			}
 
@@ -97,6 +97,13 @@ class DiaryController
 			$stmt->execute();
 
 			$diary = $stmt->fetch(PDO::FETCH_ASSOC);
+
+			// 存在しない日記ID指定された場合
+			if (!$diary) {
+				$_SESSION['error']['common'] = '指定された日記が存在しません';
+				header('Location: /404');
+				exit;
+			}
 
 			// 戻るボタンの戻り先の設定
 			$from = $_GET['from'] ?? 'public';
@@ -134,6 +141,13 @@ class DiaryController
 			$stmt->execute();
 
 			$diary = $stmt->fetch(PDO::FETCH_ASSOC);
+
+			// 存在しない日記ID指定された場合
+			if (!$diary) {
+				$_SESSION['error']['common'] = '指定された日記が存在しません';
+				header('Location: /404');
+				exit;
+			}
 
 			// 戻るボタンの戻り先の設定
 			$from = $_GET['from'] ?? 'public';
@@ -212,13 +226,9 @@ class DiaryController
 			$diary_date = $_POST['diary_date'] ?? '';
 			$diary_image = $imagePath ?? '';
 			$body = $_POST['body'] ?? '';
+			$is_public = $_POST['is_public'] ?? 0;
 
 			// 必須チェック
-			$title = $_POST['title'] ?? '';
-			$diary_date = $_POST['diary_date'] ?? '';
-			$body = $_POST['body'] ?? '';
-			$is_public = $_POST['is_public'] ?? '';
-
 			if (empty($title)){
 				$_SESSION['error']['title'] = 'タイトルは必須です';
 			}
@@ -227,9 +237,6 @@ class DiaryController
 			}
 			if (empty($body)){
 				$_SESSION['error']['body'] = '本文は必須です';
-			}
-			if (empty($file)){
-				$_SESSION['error']['image'] = '画像は必須です';
 			}
 
 			if(!empty($_SESSION['error'])){
@@ -243,7 +250,8 @@ class DiaryController
 					title = :title,
 					diary_date = :diary_date,
 					image = :diary_image,
-					body = :body
+					body = :body,
+					is_public = :is_public
 				WHERE d.id = :id
 			";
 
@@ -253,6 +261,7 @@ class DiaryController
 			$stmt->bindValue(':diary_date', $diary_date, PDO::PARAM_STR);
 			$stmt->bindValue(':diary_image', $diary_image, PDO::PARAM_STR);
 			$stmt->bindValue(':body', $body, PDO::PARAM_STR);
+			$stmt->bindValue(':is_public', $is_public, PDO::PARAM_INT);
 
 			$stmt->execute();
 
