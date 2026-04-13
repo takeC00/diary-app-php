@@ -6,8 +6,8 @@
 		<section>
 			<h1>
 				マイページ
-				<img src="<?= !empty($diaries[0]['icon']) ? $diaries[0]['icon'] : '/images/defaults/default.png'; ?>" class="icon"
-					alt="">
+				<img src="<?= !empty($diaries[0]['icon']) ? $diaries[0]['icon'] : '/images/defaults/default.png'; ?>"
+					class="icon" alt="">
 			</h1>
 			<form action="/myPage/edit/<?= (int)$_SESSION['user']['id'] ?>" method="POST" enctype="multipart/form-data">
 				<div>
@@ -21,8 +21,8 @@
 				<div class="diary-detail flex">
 					<div class="detail">
 						<p class="mini-title">自己紹介：</p>
-						<textarea
-							name="introduction"><?= htmlspecialchars($diaries[0]['introduction'] ?? '', ENT_QUOTES, 'UTF-8') ?></textarea>
+						<textarea name="introduction"
+							placeholder="まだ、自己紹介文が登録されていません。自己紹介文を登録してみましょう"><?= htmlspecialchars($diaries[0]['introduction'] ?? '', ENT_QUOTES, 'UTF-8') ?></textarea>
 						<p class="mini-title">アイコン：</p>
 						<div class="icon-list">
 							<label>
@@ -55,6 +55,7 @@
 					</div>
 					<div>
 						<p class="mini-title">日記一覧：</p>
+						<?php if (!empty($diaries[0])) :?>
 						<div class="user-diary-grid">
 							<?php foreach ($diaries as $diary): ?>
 							<a href="/show/<?= (int)$diary['id'] ?>?from=myPage&page=<?= (int)$_SESSION['user']['id'] ?>"
@@ -63,6 +64,9 @@
 							</a>
 							<?php endforeach; ?>
 						</div>
+						<?php else :?>
+						<h2>まだ、日記が作成されていません。<a href="/diary/create">新規作成</a>してください</h2>
+						<?php endif ;?>
 					</div>
 				</div>
 				<div class="update-button-my-page">
