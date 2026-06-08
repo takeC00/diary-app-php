@@ -1,4 +1,4 @@
-DROP TABLE diaries;
+DROP TABLE IF EXISTS diaries;
 
 CREATE TABLE `diaries` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,

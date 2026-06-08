@@ -1,4 +1,4 @@
-DROP TABLE users;
+DROP TABLE IF EXISTS users;
 
 CREATE TABLE `users` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
