@@ -194,7 +194,11 @@ class DiaryController
 
 				// エラーチェック
 				if ($file['error'] !== UPLOAD_ERR_OK) {
-						$_SESSION['error']['image'] = 'アップロードに失敗しました';
+						$message = match ($file['error']) {
+							UPLOAD_ERR_INI_SIZE, UPLOAD_ERR_FORM_SIZE => '画像サイズが大きすぎます（10MB以下）',
+							default => 'アップロードに失敗しました',
+						};
+						$_SESSION['error']['image'] = $message;
 						header('Location: /edit/' . $id);
 						exit;
 				}
@@ -310,7 +314,11 @@ class DiaryController
 
 				// エラーチェック
 				if ($file['error'] !== UPLOAD_ERR_OK) {
-						$_SESSION['error']['image'] = 'アップロードに失敗しました';
+						$message = match ($file['error']) {
+							UPLOAD_ERR_INI_SIZE, UPLOAD_ERR_FORM_SIZE => '画像サイズが大きすぎます（10MB以下）',
+							default => 'アップロードに失敗しました',
+						};
+						$_SESSION['error']['image'] = $message;
 						header('Location: /diary/create');
 						exit;
 				}
@@ -351,13 +359,13 @@ class DiaryController
 			if (empty($diary_date)){
 				$_SESSION['error']['diary_date'] = '日付は必須です';
 			}
-			if (empty($is_public)){
+			if (!isset($_POST['is_public']) || $_POST['is_public'] === ''){
 				$_SESSION['error']['is_public'] = '公開設定は必須です';
 			}
 			if (empty($body)){
 				$_SESSION['error']['body'] = '本文は必須です';
 			}
-			if (empty($file)){
+			if (empty($_FILES['diary_image']['name'])){
 				$_SESSION['error']['image'] = '画像は必須です';
 			}
 
