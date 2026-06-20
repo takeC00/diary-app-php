@@ -33,6 +33,56 @@ https://github.com/takeC00/diary-app-laravel
 
 ---
 
+## Dev Container で開発（VS Code）
+
+VS Code の [Dev Containers](https://containers.dev/) 拡張機能を使うと、エディタ内でコンテナ環境を開いて開発できます。コード変更はボリュームマウントで即時反映されます。
+
+### 前提条件
+
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) をインストール済みであること
+- VS Code に **Dev Containers** 拡張機能が入っていること
+
+### 手順
+
+1. リポジトリを clone してフォルダを開く
+2. コマンドパレット（`Cmd+Shift+P` / `Ctrl+Shift+P`）で **「Dev Containers: Reopen in Container」** を実行
+3. 初回はイメージのビルドに数分かかることがあります
+4. コンテナ起動後、ブラウザでアプリにアクセス
+
+| 画面 | URL |
+|------|-----|
+| 公開日記一覧 | http://localhost:8080/ |
+| ログイン | http://localhost:8080/login |
+| 新規登録 | http://localhost:8080/register |
+
+※ Dev Container ではコンテナの **80** 番がホストの **8080** に転送されます（`devcontainer.json` の `hostPort: 8080`）。8080 が使えない場合は VS Code の **「ポート」** タブに表示される URL（例: `http://localhost:55576`）でもアクセスできます。
+
+### Dev Container 構成
+
+| 項目 | 内容 |
+|------|------|
+| 開発用イメージ | `docker/dev/Dockerfile`（git / mariadb-client 付き） |
+| Compose | `.devcontainer/docker-compose.yml` |
+| 作業ディレクトリ | `/var/www/html`（web コンテナ） |
+| DB 接続（コンテナ内） | `mysql -h db -u root -proot diary_app_php` |
+
+### ログイン（テストユーザー）
+
+| メール | パスワード |
+|--------|------------|
+| `sample@gmail.com` | `pass1234` |
+
+### トラブルシューティング
+
+| 症状 | 対処 |
+|------|------|
+| `port is already allocated`（3307 / 8080） | 先に `docker compose down` で通常の Compose コンテナを停止してから Dev Container を起動する（**両方同時には使えません**） |
+| `ENOENT: scandir` / 起動に失敗する | ① ターミナルで `docker compose -f .devcontainer/docker-compose.yml down -v` ② VS Code で **Rebuild Container** |
+| Reopen しても開けない | コマンドパレット → **「Dev Containers: Attach to Running Container」** → `diary-app-php_devcontainer-web-1` を選択 |
+| アプリの URL | VS Code の「ポート」タブで `80` の転送先 URL を開く |
+
+---
+
 ## ローカル環境構築手順（Docker）
 
 MAMP などは不要です。**Docker Desktop** があれば、誰でも同じ環境を構築できます。

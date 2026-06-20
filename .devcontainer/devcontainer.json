@@ -1,0 +1,29 @@
+{
+  "name": "Diary App PHP",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "web",
+  "workspaceFolder": "/var/www/html",
+  "runServices": ["db"],
+  "shutdownAction": "stopCompose",
+  "overrideCommand": false,
+  "remoteUser": "root",
+  "forwardPorts": [80],
+  "portsAttributes": {
+    "80": {
+      "label": "Web App",
+      "onAutoForward": "openBrowser",
+      "hostPort": 8080
+    }
+  },
+  "postStartCommand": "mkdir -p public/images/uploads && chown -R www-data:www-data public/images/uploads",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "bmewburn.vscode-intelephense-client"
+      ],
+      "settings": {
+        "php.validate.enable": false
+      }
+    }
+  }
+}
